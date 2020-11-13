@@ -25,6 +25,7 @@ int** fillMatrixAutomatically(int**& matrix, int row, int col);
 void FreeMatrix(int**& m, int row);
 void printMatrix(int**& matrix, int, int);
 int** AdditionMatrix(int**& matrixA, int**& matrixB, int size1, int size2);
+int** multOfMatrix(int**& matrixA, int**& matrixB, int rowM1, int colM1, int rowM2, int colM2);
 
 /*
  * 
@@ -91,8 +92,28 @@ int main(int argc, char** argv) {
                 cout << "Ingrese la operacion que deseas realiza: " << endl;
                 cin >> operation;
                 //cout << "Operation: " << operation << endl;
+                //FreeMatrix(int**& m, int row)
+                for(int i = 0;i<< mainArrayForMatrix.size();i++){
+                    FreeMatrix(mainArrayForMatrix.at(i),vectorRow[i]);
+                }
 
 
+                break;
+            }
+            case 4:
+            {
+                //multOfMatrix(int**& matrixA, int**& matrixB, int rowM1, int colM1, int rowM2, int colM2)
+                cout << "First matrix: " << endl;
+                printMatrix(mainArrayForMatrix.at(0), vectorRow[0], vectorCol[0]);
+                cout << "Second matrix: " << endl;
+                printMatrix(mainArrayForMatrix.at(1), vectorRow[1], vectorCol[1]);
+                cout << "Result: " << endl;
+
+                int** resultM = multOfMatrix(mainArrayForMatrix.at(0), mainArrayForMatrix.at(1), vectorRow[0], vectorCol[0], vectorRow[1], vectorCol[1]);
+                printMatrix(resultM, vectorRow[0], vectorCol[1]);
+                for(int i = 0;i<< mainArrayForMatrix.size();i++){
+                    FreeMatrix(mainArrayForMatrix.at(i),vectorRow[i]);
+                }
                 break;
             }
 
@@ -168,7 +189,7 @@ int** AdditionMatrix(int**& matrixA, int**& matrixB, int size) {
     int** Tempmatrix = NULL;
     Tempmatrix = GenerateMatrix(size, size);
     for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size<; j++) {
+        for (int j = 0; j < size; j++) {
             Tempmatrix[i][j] = matrixA[i][j] + matrixB[i][j];
         }
     }
@@ -188,35 +209,19 @@ int** multOfMatrix(int**& matrixA, int**& matrixB, int rowM1, int colM1, int row
     int** Tempmatrix = NULL;
     if (colM1 == rowM2) {
         Tempmatrix = GenerateMatrix(colM1, rowM2);
-        for(int i = 0;i < rowM1;i++){
-            for(int j = 0; j < colM2;j++){
-                int tempRowArr [rowM1] = returnArray(matrixA,i,rowM1,0);
-                int tempColArray [colM2] = returnArray(matrixB,j,colM2,1);
-                Tempmatrix[i][j] = 
+        for (int i = 0; i < rowM1; i++) {
+            for (int j = 0; j < colM2; j++) {
+                Tempmatrix[i][j] = 0;
+                for (int k = 0; k < colM1; k++){
+                    Tempmatrix[i][j] += matrixA[i][k] * matrixB[k][j];
+                }
             }
         }
     }
+
     return Tempmatrix;
 }
 
-int productoPunto(int* a, int* b){
-    
-}
-
-int* returnArray(int** m, int x, int y, int desicion) {
-    int temp [y];
-    if (desicion == 1) {
-        for (int i = 0; i < y; i++) {
-            temp[i] = m[x][i];
-        }
-    } else {
-        for (int i = 0; i < y; i++) {
-            temp[i] = m[i][x];
-        }
-    }
-    return temp;
-    
-}
 
 
 
